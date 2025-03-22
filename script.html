@@ -1,0 +1,545 @@
+Even in your loneliest hour, when the silence feels heavier than the world itself, the universe whispers: ‘I am with you. Keep walking. Every tear you shed waters the roots of the person you are meant to be. You are not lost—you are becoming. And one day, you will look back and see that even in the darkness, you were always held by something greater than yourself.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astral Orb Planner</title>
+    <style>
+        /* General Styles - Cosmic/Astrology Theme */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+
+             /* Background Image */
+            background-image: url('images/bg.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keeps the background fixed during scrolling */
+            /* Increased contrast for better text readability */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin-top: 20px;
+            padding: 20px;
+            /* Darker, more subtle background */
+            background-color: rgba(10, 10, 42, 0.7);  /*  Dark translucent color */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #a0c4ff;
+            margin-bottom: 20px;
+            font-weight: 500; /* Lighter font weight */
+        }
+
+        /* Orb Styles */
+        .orb-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            /* Improved alignment */
+            align-items: center; /* Vertically align items */
+            margin-bottom: 20px;  /* Add spacing */
+        }
+
+        .orb-wrapper {  /*  New wrapper div */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+             /* Scale down on smaller screens for better fitting */
+            width: calc(33.33% - 20px); /* Adjust for 3 items in row, accounting for the gap */
+            max-width: 150px; /* Max size to maintain readability */
+        }
+
+        .orb {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 20px #2979ff;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+           /*  Improved Animation */
+            will-change: transform; /* Help browser optimize the orb transformations */
+             /* Reduced animation time - makes the floating effect more subtle, less laggy */
+             animation: float 4s ease-in-out infinite;
+        }
+
+        /* Orb Floating Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px); /* Reduced floating height */
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .orb:hover {
+            transform: scale(1.1);
+            /* Subtle glow */
+            box-shadow: 0 0 30px rgba(41, 121, 255, 0.8);
+        }
+
+        .orb .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .orb .progress {
+            height: 100%;
+            background-color: #ffca28;
+            width: 0%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .orb-label { /* Label Styling */
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #b3e5fc;
+            text-transform: uppercase; /* All caps for labels */
+            letter-spacing: 1px; /* Add spacing */
+        }
+
+        /* Task List Styles */
+        .task-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .task-list h2 {
+            color: #a0c4ff;
+            margin-bottom: 10px;
+            font-size: 1.3em; /* Increase title size */
+            font-weight: 400; /* Lighter font */
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .task:last-child {
+            border-bottom: none;
+        }
+
+        .task input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .task input[type="checkbox"]:checked + label {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+         /* Delete Button */
+        .delete-button {
+            background-color: #e53935;  /* Red color */
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;  /* Smaller font */
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c62828;  /* Darker red on hover */
+        }
+
+        .add-task-form {
+            margin-top: 15px;
+            display: flex;
+        }
+
+        .add-task-form input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .add-task-form button {
+            background-color: #42a5f5;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .add-task-form button:hover {
+            background-color: #1e88e5;
+        }
+
+        /* Battle Rating Styles */
+        .battle-rating-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+             /* Add margin to separate rating from Reset button */
+            margin-bottom: 20px;
+        }
+
+        .battle-rating-value {
+            font-size: 1.5em;
+            color: #ffca28;
+            font-weight: 600;
+        }
+
+        /* Reset Button */
+        #reset-button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #reset-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .orb-container {
+                flex-direction: row; /*  Stack on smaller screens */
+                justify-content: center;
+                align-items: center;
+            }
+            .orb-wrapper {
+                width: calc(50% - 20px); /* Two orbs per row */
+                 /* Reduced maximum width */
+                 max-width: 120px;
+            }
+            .orb {
+                width: 90px;
+                height: 90px;
+                font-size: 12px;
+            }
+
+            .container {
+                width: 95%;
+                margin: 10px 0;
+                padding: 10px;
+            }
+        }
+
+        /*  Specific Orb Styles */
+         .orb[data-astral="glow-up"] { background-image: url('images/1.jpg'); }
+        .orb[data-astral="experience"] { background-image: url('images/2.jpg'); }
+        .orb[data-astral="action"] { background-image: url('images/3.jpg'); }
+        .orb[data-astral="discipline"] { background-image: url('images/4.jpg'); }
+        .orb[data-astral="block"] { background-image: url('images/5.jpg'); }
+        .orb[data-astral="level-up"] { background-image: url('images/6.jpg'); }
+        .orb[data-astral="self-love"] { background-image: url('images/7.jpg'); }
+        .orb[data-astral="network"] { background-image: url('images/8.jpg'); }
+        .orb[data-astral="delegate"] { background-image: url('images/9.jpg'); }
+        .orb[data-astral="sprint"] { background-image: url('images/10.jpg'); }
+        .orb[data-astral="showcase"] { background-image: url('images/11.jpg'); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Astral Orb Planner</h1>
+
+        <div class="orb-container">
+           <!-- Orbs -->
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="glow-up"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Glow-up</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="experience"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Experience</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="action"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Action</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="discipline"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Discipline</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="block"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Block</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="level-up"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Level Up</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="self-love"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Self-Love</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="network"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Network</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="delegate"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Delegate</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="sprint"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Sprint</div>
+            </div>
+
+            <div class="orb-wrapper">
+                <div class="orb" data-astral="showcase"><div class="progress-bar"><div class="progress"></div></div></div>
+                <div class="orb-label">Showcase</div>
+            </div>
+        </div>
+
+        <!-- Task List Section -->
+        <div id="task-list-container" class="task-list hidden">
+            <h2 id="task-list-title"></h2>
+            <div id="task-list-content">
+                <!-- Tasks will be dynamically added here -->
+            </div>
+            <div class="add-task-form">
+                <input type="text" id="new-task-input" placeholder="Add a task">
+                <button id="add-task-button">Add Task</button>
+            </div>
+        </div>
+
+        <!-- Rating and Reset -->
+        <div class="battle-rating-container">
+            <div>Battle Rating:</div>
+            <div id="battle-rating" class="battle-rating-value">1000</div>
+        </div>
+        <button id="reset-button">Reset All Progress</button>
+    </div>
+
+    <script>
+        const orbs = document.querySelectorAll('.orb');
+        const taskListContainer = document.getElementById('task-list-container');
+        const taskListTitle = document.getElementById('task-list-title');
+        const taskListContent = document.getElementById('task-list-content');
+        const addTaskButton = document.getElementById('add-task-button');
+        const newTaskInput = document.getElementById('new-task-input');
+        const resetButton = document.getElementById('reset-button');
+        const battleRatingElement = document.getElementById('battle-rating');
+        let battleRating = 1000;
+
+        // Sample Task Data (Replace with localStorage for persistence)
+        const taskData = {
+            "glow-up": [{ text: "Morning Skincare", completed: false }, { text: "Healthy Breakfast", completed: false }],
+            "experience": [{ text: "Read a Book", completed: false }],
+            "action": [{ text: "Work on Side Project", completed: false }],
+            "discipline": [{ text: "Wake up Early", completed: false }],
+            "block": [{ text: "Limit Social Media", completed: false }],
+            "level-up": [{ text: "Learn New Skill", completed: false }],
+            "self-love": [{ text: "Meditate 15 Minutes", completed: false }],
+            "network": [{ text: "Network with Peers", completed: false }],
+            "delegate": [{ text: "Outsource Task", completed: false }],
+            "sprint": [{ text: "Complete a Goal", completed: false }],
+            "showcase": [{ text: "Update Portfolio", completed: false }]
+        };
+
+        let activeOrb = null;
+
+        // Function to update Battle Rating
+        function updateBattleRating() {
+            battleRating = 0;
+            let completedTasksCount = 0;
+            let totalTasksCount = 0;
+
+            for (const astral in taskData) {
+                const tasks = taskData[astral];
+                completedTasksCount += tasks.filter(task => task.completed).length;
+                totalTasksCount += tasks.length;
+            }
+
+            if (totalTasksCount > 0) {
+                battleRating = Math.round((completedTasksCount / totalTasksCount) * 1000); // Normalize to 0-1000 range
+            }
+
+            battleRatingElement.textContent = battleRating;
+        }
+
+        // Function to update progress bar
+        function updateProgressBar(astral) {
+            const orb = document.querySelector(`.orb[data-astral="${astral}"]`);
+            const tasks = taskData[astral];
+            const completedTasks = tasks.filter(task => task.completed).length;
+            const progress = (tasks.length > 0) ? (completedTasks / tasks.length) * 100 : 0;
+            orb.querySelector('.progress').style.width = `${progress}%`;
+        }
+
+         // Function to delete a task
+        function deleteTask(astral, index) {
+            taskData[astral].splice(index, 1); // Remove the task from the array
+            updateProgressBar(astral);          // Update the progress bar
+            updateBattleRating();           // Update the Battle Rating
+            localStorage.setItem('taskData', JSON.stringify(taskData));  // Save to localStorage
+            renderTaskList(astral);           // Re-render the task list
+        }
+
+        // Function to render task list
+        function renderTaskList(astral) {
+            taskListTitle.textContent = `${astral.charAt(0).toUpperCase() + astral.slice(1)} Tasks`;
+            taskListContent.innerHTML = ''; // Clear existing tasks
+
+            taskData[astral].forEach((task, index) => {
+                const taskDiv = document.createElement('div');
+                taskDiv.classList.add('task');
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `${astral}-task-${index}`;
+                checkbox.checked = task.completed;
+                checkbox.addEventListener('change', () => {
+                    task.completed = checkbox.checked;
+                    updateProgressBar(astral);
+                    updateBattleRating();
+                    localStorage.setItem('taskData', JSON.stringify(taskData));
+                    renderTaskList(astral); // Re-render to update strikethrough
+                });
+
+                const label = document.createElement('label');
+                label.htmlFor = `${astral}-task-${index}`;
+                label.textContent = task.text;
+                if(task.completed) {
+                    label.style.textDecoration = 'line-through';
+                    label.style.color = 'rgba(255, 255, 255, 0.5)';
+                }
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => {
+                    deleteTask(astral, index); // Call deleteTask function
+                });
+
+                taskDiv.appendChild(checkbox);
+                taskDiv.appendChild(label);
+                taskDiv.appendChild(deleteButton);  // Append delete button to task div
+                taskListContent.appendChild(taskDiv);
+            });
+        }
+
+        // Orb click event listener
+        orbs.forEach(orb => {
+            orb.addEventListener('click', () => {
+                const astral = orb.dataset.astral;
+
+                if (activeOrb === astral) {
+                    // Toggle visibility if clicking the same orb
+                    taskListContainer.classList.toggle('hidden');
+                } else {
+                    // Show task list for the clicked orb
+                    activeOrb = astral;
+                    renderTaskList(astral);
+                    taskListContainer.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Add task functionality
+        addTaskButton.addEventListener('click', () => {
+            if (activeOrb && newTaskInput.value.trim() !== '') {
+                taskData[activeOrb].push({ text: newTaskInput.value.trim(), completed: false });
+                newTaskInput.value = '';
+                renderTaskList(activeOrb);
+                updateBattleRating();
+                updateProgressBar(activeOrb);
+                localStorage.setItem('taskData', JSON.stringify(taskData));
+            }
+        });
+
+        // Reset button functionality
+        resetButton.addEventListener('click', () => {
+            if (confirm("Are you sure you want to reset all progress?")) {
+                for (const astral in taskData) {
+                    taskData[astral].forEach(task => task.completed = false);
+                    updateProgressBar(astral);
+                }
+                updateBattleRating();
+                activeOrb = null; // Clear active orb
+                taskListContainer.classList.add('hidden'); // Hide task list
+                localStorage.setItem('taskData', JSON.stringify(taskData));
+            }
+        });
+
+        // Initial setup: Load data from localStorage and update progress bars
+        window.addEventListener('load', () => {
+            const storedTaskData = localStorage.getItem('taskData');
+            if (storedTaskData) {
+                Object.assign(taskData, JSON.parse(storedTaskData));
+            }
+
+            for (const astral in taskData) {
+                updateProgressBar(astral);
+            }
+            updateBattleRating(); // Update Battle Rating on load
+        });
+    </script>
+    <h2>You are Becoming. Claim your Power!</h2>
+</body>
+
+
+</html>
