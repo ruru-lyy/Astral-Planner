@@ -1,5 +1,3 @@
-Even in your loneliest hour, when the silence feels heavier than the world itself, the universe whispers: ‘I am with you. Keep walking. Every tear you shed waters the roots of the person you are meant to be. You are not lost—you are becoming. And one day, you will look back and see that even in the darkness, you were always held by something greater than yourself.
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +18,7 @@ Even in your loneliest hour, when the silence feels heavier than the world itsel
             overflow-x: hidden;
 
              /* Background Image */
-            background-image: url('images/bg.jpg'); 
+            background-image: url('images/bg.jpg');  
             background-size: cover;
             background-position: center;
             background-attachment: fixed; /* Keeps the background fixed during scrolling */
@@ -386,8 +384,8 @@ Even in your loneliest hour, when the silence feels heavier than the world itsel
         let battleRating = 1000;
 
         // Sample Task Data (Replace with localStorage for persistence)
-        const taskData = {
-            "glow-up": [{ text: "Hair, Skin, Gym, Fashion", completed: false }, { text: "Healthy Breakfast", completed: false }],
+        const defaultTaskData = { // Save the default task data
+            "glow-up": [{ text: "Hair, Skin, Gym, Fashion", completed: false }],
             "experience": [{ text: "Try New Things, Read, Travel", completed: false }],
             "action": [{ text: "Do Fast, Adjust Later: House chores, errands", completed: false }],
             "discipline": [{ text: "Wake up Early", completed: false }],
@@ -399,6 +397,9 @@ Even in your loneliest hour, when the silence feels heavier than the world itsel
             "sprint": [{ text: "Certifications: Do it fast, pass, add to Resume", completed: false }],
             "showcase": [{ text: "Update Portfolio, Post Reddit/Insta/Linkedin", completed: false }]
         };
+
+        // Current task data - starts with default values
+        let taskData = JSON.parse(JSON.stringify(defaultTaskData)); // Create a deep copy
 
         let activeOrb = null;
 
@@ -514,6 +515,10 @@ Even in your loneliest hour, when the silence feels heavier than the world itsel
         // Reset button functionality
         resetButton.addEventListener('click', () => {
             if (confirm("Are you sure you want to reset all progress?")) {
+                // Reset to default tasks
+                taskData = JSON.parse(JSON.stringify(defaultTaskData)); // Deep copy default data
+
+                // Reset progress bars and Battle Rating
                 for (const astral in taskData) {
                     taskData[astral].forEach(task => task.completed = false);
                     updateProgressBar(astral);
@@ -521,7 +526,9 @@ Even in your loneliest hour, when the silence feels heavier than the world itsel
                 updateBattleRating();
                 activeOrb = null; // Clear active orb
                 taskListContainer.classList.add('hidden'); // Hide task list
+
                 localStorage.setItem('taskData', JSON.stringify(taskData));
+                 renderTaskList("glow-up"); //rerender tasks to update task list
             }
         });
 
@@ -529,7 +536,10 @@ Even in your loneliest hour, when the silence feels heavier than the world itsel
         window.addEventListener('load', () => {
             const storedTaskData = localStorage.getItem('taskData');
             if (storedTaskData) {
-                Object.assign(taskData, JSON.parse(storedTaskData));
+                taskData = JSON.parse(storedTaskData);
+            } else {
+                 // If no data in local storage, start with default data
+                taskData = JSON.parse(JSON.stringify(defaultTaskData));
             }
 
             for (const astral in taskData) {
@@ -538,7 +548,7 @@ Even in your loneliest hour, when the silence feels heavier than the world itsel
             updateBattleRating(); // Update Battle Rating on load
         });
     </script>
-    <h2>You are Becoming. Claim your Power!</h2>
+    <h2>You are Becoming.</h2>
 </body>
 
 
